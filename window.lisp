@@ -1019,6 +1019,10 @@ window. Default to the current window. if
     (dolist (group target-groups)
       (kill-windows-in-group group))))
 
+(defcommand kill-windows-any-group (group) ((:group "In Group: "))
+  "Kill all windows in the specified @var{group}"
+  (kill-windows-in-group in-group))
+
 (defcommand-alias kill kill-window)
 
 (defcommand title (title) ((:rest "Set window's title to: "))
