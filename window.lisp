@@ -1019,15 +1019,15 @@ window. Default to the current window. if
     (dolist (group target-groups)
       (kill-windows-in-group group))))
 
-(defcommand kill-windows-any-group (group) ((:group "In Group: "))
-  "Kill all windows in the specified @var{group}"
-  (kill-windows-in-group in-group))
-
 (defcommand kill-windows-other () ()
   "Kill all windows in current group except the current-window"
   (let ((target-windows (remove (current-window)
                                 (group-windows (current-group)))))
     (kill-windows target-windows)))
+
+(defcommand kill-windows-any-group (group) ((:group "In Group: "))
+  "Kill all windows in the specified @var{group}"
+  (kill-windows-in-group in-group))
 
 (defcommand-alias kill kill-window)
 
