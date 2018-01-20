@@ -1011,6 +1011,14 @@ window. Default to the current window. if
   "Kill all windows in the current group."
   (kill-windows-in-group (current-group)))
 
+(defcommand kill-windows-other-groups () ()
+  "kill all windows in all groups except the current group."
+  (let ((target-groups (remove (current-group)
+                               (screen-groups
+                                 (current-screen)))))
+    (dolist (group target-groups)
+      (kill-windows-in-group group))))
+
 (defcommand kill-windows-any-group (group) ((:group "In Group: "))
   "Kill all windows in the specified @var{group}"
   (kill-windows-in-group in-group))
