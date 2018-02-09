@@ -480,17 +480,19 @@ FOCUS-WINDOW is an extra window used for _NET_SUPPORTING_WM_CHECK."
 
 ;;; Screen commands
 
+(defun switch-screen-current-group (screen)
+"Switch to screen @var{screen} and set focus in the current group"
+  (switch-to-screen screen)
+  (group-wake-up (current-group)))
+
 (defcommand snext () ()
 "Go to the next screen."
-  (switch-to-screen (next-screen))
-  (group-wake-up (current-group)))
+  (switch-screen-current-group (next-screen)))
 
 (defcommand sprev () ()
 "Go to the previous screen."
-  (switch-to-screen (next-screen (reverse (sort-screens))))
-  (group-wake-up (current-group)))
+  (switch-screen-current-group (next-screen (reverse (sort-screens)))))
 
 (defcommand sother () ()
 "Go to the last screen."
-  (switch-to-screen (cadr *screen-list*))
-  (group-wake-up (current-group)))
+  (switch-screen-current-group (cadr *screen-list*)))
