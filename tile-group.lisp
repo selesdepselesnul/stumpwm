@@ -1050,7 +1050,8 @@ space."
           (when (frame-window l)
             (update-decoration (frame-window l)))
           (when (eq frame current)
-            (show-frame-indicator group))))))
+            (show-frame-indicator group))
+          (run-hook-with-args *remove-split-hook* l frame)))))
 
 (defcommand-alias remove remove-split)
 
@@ -1066,10 +1067,12 @@ space."
         (progn
           (mapc (lambda (w)
                   ;; windows in other frames disappear
-                  (unless (eq (window-frame w) (tile-group-current-frame group))
+                  (unless (eq (window-frame w) 
+                              (tile-group-current-frame group))
                     (hide-window w))
                   (setf (window-frame w) frame))
-                (head-windows group head))
+                (remove-if (lambda (w) (typep w 'float-window))
+                           (head-windows group head)))
           (setf (frame-window frame) win
                 (tile-group-frame-head group head) frame
                 (tile-group-current-frame group) frame)
